@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get('/health', healthController.getHealth);
 
-router.get(productController.getProducts);
+router.get(productController.getAllProducts);
 router.post(productController.createProduct);
 router.get('/:id', productController.getProductById);
 router.put('/:id', productController.updateProduct);
