@@ -16,17 +16,29 @@ const getProductsFromFile = callback => {
             callback.JSON.parse(fileContent);
         }
     });
-
+}
 
 module.exports = class Product {
-    constructor(id, name, ownerName, developers, scrumMaster, startDate, methodology) {
-        this.id = id
-        this.name = name
-        this.ownerName = ownerName
-        this.developers = developers
-        this.scrumMaster = scrumMaster
-        this.startDate = startDate
-        this.methodology = methodology
-    }
+    constructor(id, name, ownerName, developers, scrumMasterName, startDate, methodology) {
+        this.productId = id;
+        this.productName = name;
+        this.productOwnerName = ownerName;
+        this.developers = developers;
+        this.scrumMasterName = scrumMasterName;
+        this.startDate = startDate;
+        this.methodology = methodology;
+    };
 
+    save() {
+        getProductsFromFile(products => {
+            products.push(this);
+            fs.writeFile(productsDataPath, JSON.stringify(products), err => {
+                console.log(err);
+            });
+        })
+    };
+
+    static fetchAll(callback) {
+        getProductsFromFile(callback);
+    };
 }
