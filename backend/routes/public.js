@@ -1,4 +1,5 @@
 const express = require('express');
+// const { body } = require('express-validator/check');
 
 const healthController = require('../controllers/health');
 const productController = require('../controllers/products');
