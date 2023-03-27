@@ -6,6 +6,7 @@ const Product = require('../models/products');
 exports.getAllProducts = (req, res, next) => {
     //TODO
     // Retrieve all the products
+    Product.fetchAll()
 }
 
 exports.createProduct = (req, res, next) => {
