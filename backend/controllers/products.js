@@ -24,6 +24,7 @@ exports.getAllProducts = (req, res, next) => {
     });
 }
 
+//POST request to create new product on the server
 exports.createProduct = (req, res, next) => {
     const id = req.params.id
     const name = req.query.productName
@@ -43,25 +44,15 @@ exports.getProductsById = (req, res, next) => {
     //TODO
     //search for products based on the ID
 }
-
+//PUT request to update new product
 exports.updateProduct = (req, res, next) => {
-    //TODO
-    // update a given product by the id
     const productId = req.params.id
-    var productName = req.query.productName
-    var productOwnerName = req.query.productOwnerName;
-    var developers = req.query.developers;
-    var scrumMasterName = req.query.scrumMasterName;
-    var startDate = req.query.startDate;
-    var methodology = req.query.methodology;
-    if (!productId) {
-        //output another error and terminate
+    try {
+        Product.updateProductById(productId, req.query);
+        res.status(201).json({message:'201: Success'});
+    } catch (err) {
+        res.status(404).json({message: err.stringify});
     }
-    if ([productName, productOwnerName, developers, scrumMasterName, startDate, methodology].some(False)) {
-            //Output some error
-        }
-    
-    
 }
 
 exports.deleteProduct = (req, res, next) => {

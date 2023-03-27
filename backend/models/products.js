@@ -18,6 +18,16 @@ const getProductsFromFile = callback => {
     });
 }
 
+const getProductById = (productId, products) => {
+    products.map(product => {
+        if (product.productId === productId) {
+          return updatedProduct;
+        }
+        return product;
+      });
+}
+
+
 module.exports = class Product {
     constructor(id, name, ownerName, developers, scrumMasterName, startDate, methodology) {
         this.productId = id;
@@ -37,6 +47,44 @@ module.exports = class Product {
             });
         })
     };
+
+    update(attributes) {
+        const updateKeys = Object.keys(attributes);
+
+        if (!updateKeys.length) {
+            throw new Error('At least one attribute must be updated');
+        }
+        //override existing class attributes with new attributes
+        const updatedProduct = {
+            ...this,
+            ...attributes
+        };
+        //write update to disk
+        getProductsFromFile(products => {
+            const updatedProducts = getProductById(this.productId, products);
+            fs.writeFile(productsDataPath, JSON.stringify(updatedProducts), err => {
+              console.log(err);
+            });
+        });
+    };
+
+    static updateProductById(id, attributes) {
+        getProductsFromFile(products => {
+            const updateKeys = Object.keys(attributes);
+            if (!updateKeys.length) {
+                throw new Error('At least one attribute must be updated');
+            }
+            product = getProductById(id, products)
+            const updatedProduct = {
+                ...product,
+                ...attributes
+            };
+            fs.writeFile(productsDataPath, JSON.stringify(updatedProducts), err => {
+                console.log(err);
+              });
+
+        })
+    }
 
     static fetchAll(callback) {
         getProductsFromFile(callback);
