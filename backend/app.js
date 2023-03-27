@@ -12,7 +12,7 @@ app.use((req, res, next) => {
     next();
 });
 
-//access routes
+//API pubic routes
 app.use('/api', publicRoutes);
 
 //handle incoming json data
