@@ -25,7 +25,7 @@ const getProductsFromFile = callback => {
         if (err) {
             callback([]);
         } else {
-            callback.JSON.parse(fileContent);
+            callback(JSON.parse(fileContent));
         }
     });
 };
@@ -120,19 +120,19 @@ module.exports = class Product {
     @description Retrieves a product with the specified ID from the products file
     @param {string} id - ID of the product to retrieve
     @throws {Error} If no product with the specified ID is found.
+    @param {function} callback - Callback function to handle products data
     @returns {void}
     */
-    static getProductById(id) {
+    static getProductById(id, callback) {
         getProductsFromFile(products => {
-            //search for products and check if the product id matches
-            products.map(product => {
-                if (product.productId === id) {
-                    return product;
-                };
-            });
-            throw new Error('No product with ID' + id + 'exists.');
+          const product = products.find(product => product.productId == parseInt(id));
+          if (product) {
+            callback(product);
+          } else {
+            callback('No product with ID ' + id + ' exists.');
+          }
         });
-    };
+      };
 
 
     /**

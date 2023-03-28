@@ -45,8 +45,13 @@ exports.createProduct = (req, res, next) => {
  * GET request to find product by ProductID
  */
 exports.getProductsById = (req, res, next) => {
-    const product = Product.updateProductById(req.params.id);
-    res.status(200).json(stringfify(product));
+    Product.getProductById(req.params.id, product => {
+        if (product) {
+            res.status(200).json(JSON.stringify(product));
+        } else {
+            res.status(404).json({message: 'Error, Could not find product.'});
+        }
+    });
 }
 
 /**
