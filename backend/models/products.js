@@ -28,7 +28,7 @@ const getProductsFromFile = callback => {
             callback(JSON.parse(fileContent));
         }
     });
-};
+}
 
 /**
  * @function
@@ -38,6 +38,7 @@ const getProductsFromFile = callback => {
  * @returns {void}
  */
 const writeJSONData = (data, callback) => {
+    console.log("DATA " + JSON.stringify(data))
     fs.writeFile(productsDataPath, JSON.stringify(data), err => {
         if (err) {
             callback(err);
@@ -54,6 +55,7 @@ const writeJSONData = (data, callback) => {
 */
 module.exports = class Product {
     constructor(id, name, ownerName, developers, scrumMasterName, startDate, methodology) {
+
         this.productId = id;
         this.productName = name;
         this.productOwnerName = ownerName;
@@ -63,7 +65,6 @@ module.exports = class Product {
         this.methodology = methodology;
     };
 
-
     /**
     @function
     @description Saves a product to the products file
@@ -71,9 +72,16 @@ module.exports = class Product {
     */
     save() {
         getProductsFromFile(products => {
+            
             products.push(this);
-            writeJSONData(products);
-        })
+            writeJSONData(products, err => {
+                if (err) {
+                    console.log(err)
+                } else {
+                    console.log('Save Success')
+                }
+            });
+        });
     };
     
 
@@ -101,10 +109,13 @@ module.exports = class Product {
             if (!updateKeys.length) {
                 throw new Error('At least one attribute must be updated');
             }
-            const productIndex = products.findIndex(p.productId === id);
+            const productIndex = products.findIndex(p => {return p.productId === id});
             if (productIndex === -1) {
                 throw new Error('Product with ID ' + id + ' not found');
             }
+            console.log(attributes)
+            console.log({...products[productIndex]})
+            console.log({...attributes})
             //updating product with new attributes
             products[productIndex] = {
                 ...products[productIndex],

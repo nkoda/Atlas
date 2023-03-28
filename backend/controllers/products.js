@@ -7,15 +7,15 @@ const Product = require('../models/products');
  * GET request to get all products
  */
 exports.getAllProducts = (req, res, next) => {
-    Product.fetchAll(products => {
-        res.status(200).json(products)
-    });
+    console.log('getting products')
+    Product.fetchAll(product =>
+        res.status(200).json(product));
 }
 
 /**
  * POST request to create new product on the server
  */
-exports.createProduct = (req, res, next) => {
+exports.createProduct = async (req, res, next) => {
     const {
         productId,
         productName,
@@ -24,21 +24,18 @@ exports.createProduct = (req, res, next) => {
         scrumMasterName,
         startDate,
         methodology
-      } = req.query;
-
-      const product = new Product({
-        productId,
-        productName,
-        productOwnerName,
-        developers,
-        scrumMasterName,
-        startDate,
-        methodology
-      });
-
-    product.save()
-    res.status(201).json(JSON.stringify(product));
-
+      } = req.body;
+    const product = new Product(
+    productId,
+    productName,
+    productOwnerName,
+    developers,
+    scrumMasterName,
+    startDate,
+    methodology
+    );
+    product.save();
+    res.status(200).send('data recieved');
 }
 
 /**
@@ -58,12 +55,26 @@ exports.getProductsById = (req, res, next) => {
  * PUT request to update a product with the specified ID with the provided attributes
  */
 exports.updateProduct = (req, res, next) => {
-    const productId = req.params.id;
+    const productId = parseInt(req.params.id);
     try {
-        Product.updateProductById(productId, req.query);
-        res.status(200).json({message:'201: Success'});
+        // console.log(req.query) 
+        const attributes = {
+            productId,
+            productName,
+            productOwnerName,
+            developers,
+            scrumMasterName,
+            startDate,
+            methodology
+        } = req.body;
+
+        console.log(attributes)
+        Product.updateProductById(productId, attributes, () => {
+            res.status(200).json({message:'201: Success'});
+        });
+
     } catch (err) {
-        res.status(404).json({message: err.stringify});
+        res.status(404).json({message:"Update not successful"});
     }
 }
 
