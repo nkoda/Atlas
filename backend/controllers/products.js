@@ -39,10 +39,10 @@ exports.createProduct = (req, res, next) => {
     res.status(201).json(JSON.stringify(product));
 
 }
-
+//GET request to find product by ProductID
 exports.getProductsById = (req, res, next) => {
-    //TODO
-    //search for products based on the ID
+    const product = Product.updateProductById(req.params.id);
+    res.status(200).json(stringfify(product));
 }
 //PUT request to update new product
 exports.updateProduct = (req, res, next) => {

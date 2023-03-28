@@ -18,16 +18,6 @@ const getProductsFromFile = callback => {
     });
 }
 
-const getProductById = (productId, products) => {
-    products.map(product => {
-        if (product.productId === productId) {
-          return updatedProduct;
-        }
-        return product;
-      });
-}
-
-
 module.exports = class Product {
     constructor(id, name, ownerName, developers, scrumMasterName, startDate, methodology) {
         this.productId = id;
@@ -48,43 +38,38 @@ module.exports = class Product {
         })
     };
 
-    update(attributes) {
-        const updateKeys = Object.keys(attributes);
-
-        if (!updateKeys.length) {
-            throw new Error('At least one attribute must be updated');
-        }
-        //override existing class attributes with new attributes
-        const updatedProduct = {
-            ...this,
-            ...attributes
-        };
-        //write update to disk
-        getProductsFromFile(products => {
-            const updatedProducts = getProductById(this.productId, products);
-            fs.writeFile(productsDataPath, JSON.stringify(updatedProducts), err => {
-              console.log(err);
-            });
-        });
-    };
-
     static updateProductById(id, attributes) {
         getProductsFromFile(products => {
             const updateKeys = Object.keys(attributes);
             if (!updateKeys.length) {
                 throw new Error('At least one attribute must be updated');
             }
-            product = getProductById(id, products)
-            const updatedProduct = {
-                ...product,
+            const productIndex = products.findIndex(p => p.id === id);
+            if (productIndex === -1) {
+                throw new Error('Product with ID ' + id + ' not found');
+            }
+            //updating product with new attributes
+            products[productIndex] = {
+                ...products[productIndex],
                 ...attributes
             };
-            fs.writeFile(productsDataPath, JSON.stringify(updatedProducts), err => {
+            fs.writeFile(productsDataPath, JSON.stringify(products), err => {
                 console.log(err);
               });
-
-        })
+        });
     }
+
+    static getProductById(id) {
+        getProductsFromFile(products => {
+            //search for products and check if the product id matches
+            products.map(product => {
+                if (product.productId === id) {
+                    return product;
+                };
+            });
+            throw new Error('No product with ID' + id + 'exists.');
+        });
+    };
 
     static fetchAll(callback) {
         getProductsFromFile(callback);
