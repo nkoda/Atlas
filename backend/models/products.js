@@ -1,6 +1,12 @@
+/**
+@description This module provides the Product class, which represents a product with several properties
+@module Product
+*/
+
 const fs = require('fs');
 const path = require('path');
 
+//Path to products data file
 const productsDataPath = path.join(
     path.dirname(
         require.main.filename),
@@ -8,6 +14,12 @@ const productsDataPath = path.join(
         'products.json'
     );
 
+/**
+@function
+@description Reads data from products file
+@param {function} callback - Callback function to handle products data
+@returns {void}
+*/
 const getProductsFromFile = callback => {
     fs.readFile(productsDataPath, (err, fileContent) => {
         if (err) {
@@ -16,8 +28,25 @@ const getProductsFromFile = callback => {
             callback.JSON.parse(fileContent);
         }
     });
-}
+};
 
+/**
+@function
+@description Writes data to products JSON
+@param {object} data - Data to write to products file
+@returns {void}
+*/
+const writeJSONData = data => {
+    fs.writeFile(productsDataPath, JSON.stringify(data), err => {
+        console.log(err);
+      });
+};
+
+
+/**
+@class
+@description Represents a product with several properties
+*/
 module.exports = class Product {
     constructor(id, name, ownerName, developers, scrumMasterName, startDate, methodology) {
         this.productId = id;
@@ -29,15 +58,37 @@ module.exports = class Product {
         this.methodology = methodology;
     };
 
+
+    /**
+    @function
+    @description Saves a product to the products file
+    @returns {void}
+    */
     save() {
         getProductsFromFile(products => {
             products.push(this);
-            fs.writeFile(productsDataPath, JSON.stringify(products), err => {
-                console.log(err);
-            });
+            writeJSONData(products);
         })
     };
+    
 
+    /**
+    @function
+    @description Retrieves all products from the products file
+    @param {function} callback - Callback function to handle products data
+    @returns {void}
+    */
+    static fetchAll(callback) {
+        getProductsFromFile(callback);
+    };
+
+    /**
+    @function
+    @description Updates a product with the specified ID with the provided attributes
+    @param {string} id - ID of the product to update
+    @param {object} attributes - Attributes to update
+    @returns {void}
+    */
     static updateProductById(id, attributes) {
         getProductsFromFile(products => {
             const updateKeys = Object.keys(attributes);
@@ -53,12 +104,17 @@ module.exports = class Product {
                 ...products[productIndex],
                 ...attributes
             };
-            fs.writeFile(productsDataPath, JSON.stringify(products), err => {
-                console.log(err);
-              });
+            writeJSONData(products);
         });
     }
 
+
+    /**
+    @function
+    @description Retrieves a product with the specified ID from the products file
+    @param {string} id - ID of the product to retrieve
+    @returns {void}
+    */
     static getProductById(id) {
         getProductsFromFile(products => {
             //search for products and check if the product id matches
@@ -71,7 +127,21 @@ module.exports = class Product {
         });
     };
 
-    static fetchAll(callback) {
-        getProductsFromFile(callback);
-    };
+
+    /**
+    @function
+    @description Deletes a product with the specified ID from the JSON file.
+    @param {string} id - The ID of the product to be deleted.
+    @throws {Error} If no product with the specified ID is found.
+    @return {void}
+    */
+    static deleteProductById(id) {
+        //Filter out products before rewriting JSON
+        getProductsFromFile(products => {
+            const updatedProducts = products.filter(product => {
+                return product.productId !== id;
+            });
+            writeJSONData(updatedProducts);
+        });
+    }
 }
