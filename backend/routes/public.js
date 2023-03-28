@@ -15,7 +15,7 @@ router.get(productController.getAllProducts);
 router.post(productController.createProduct);
 
 //GET request for a specific product using ProductID
-router.get('/:id', productController.getProductById);
+router.get('/:id', productController.getProductsById);
 
 //PUT request to update a specific product using ProductID
 router.put('/:id', productController.updateProduct);

@@ -31,14 +31,19 @@ const getProductsFromFile = callback => {
 };
 
 /**
-@function
-@description Writes data to products JSON
-@param {object} data - Data to write to products file
-@returns {void}
-*/
-const writeJSONData = data => {
+ * @function
+ * @description Writes data to products JSON file.
+ * @param {object} data - Data to write to products file.
+ * @param {function} callback - Callback function to handle products data.
+ * @returns {void}
+ */
+const writeJSONData = (data, callback) => {
     fs.writeFile(productsDataPath, JSON.stringify(data), err => {
-        console.log(err);
+        if (err) {
+            callback(err);
+        } else {
+            callback();
+        };
       });
 };
 
@@ -87,15 +92,16 @@ module.exports = class Product {
     @description Updates a product with the specified ID with the provided attributes
     @param {string} id - ID of the product to update
     @param {object} attributes - Attributes to update
+    @param {function} callback - Callback function to handle products data after updating
     @returns {void}
     */
-    static updateProductById(id, attributes) {
+    static updateProductById(id, attributes, callback) {
         getProductsFromFile(products => {
             const updateKeys = Object.keys(attributes);
             if (!updateKeys.length) {
                 throw new Error('At least one attribute must be updated');
             }
-            const productIndex = products.findIndex(p => p.id === id);
+            const productIndex = products.findIndex(p.productId === id);
             if (productIndex === -1) {
                 throw new Error('Product with ID ' + id + ' not found');
             }
@@ -104,15 +110,16 @@ module.exports = class Product {
                 ...products[productIndex],
                 ...attributes
             };
-            writeJSONData(products);
+            writeJSONData(products, callback);
         });
-    }
+    };
 
 
     /**
     @function
     @description Retrieves a product with the specified ID from the products file
     @param {string} id - ID of the product to retrieve
+    @throws {Error} If no product with the specified ID is found.
     @returns {void}
     */
     static getProductById(id) {
@@ -129,19 +136,19 @@ module.exports = class Product {
 
 
     /**
-    @function
-    @description Deletes a product with the specified ID from the JSON file.
-    @param {string} id - The ID of the product to be deleted.
-    @throws {Error} If no product with the specified ID is found.
-    @return {void}
-    */
-    static deleteProductById(id) {
+     * @function
+     * @description Deletes a product with the specified ID from the JSON file.
+     * @param {string} id - The ID of the product to be deleted.
+     * @param {function} callback - Callback function to handle products data
+     * @return {void}
+     */
+    static deleteProductById(id, callback) {
         //Filter out products before rewriting JSON
         getProductsFromFile(products => {
             const updatedProducts = products.filter(product => {
                 return product.productId !== id;
             });
-            writeJSONData(updatedProducts);
+            writeJSONData(updatedProducts, callback);
         });
-    }
-}
+    };
+};
