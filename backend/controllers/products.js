@@ -55,7 +55,7 @@ exports.getProductsById = (req, res, next) => {
  * PUT request to update a product with the specified ID with the provided attributes
  */
 exports.updateProduct = (req, res, next) => {
-    const productId = parseInt(req.params.id);
+    const id = parseInt(req.params.id);
     try {
         // console.log(req.query) 
         const attributes = {
@@ -66,10 +66,9 @@ exports.updateProduct = (req, res, next) => {
             scrumMasterName,
             startDate,
             methodology
-        } = req.body;
+          } = req.body;
 
-        console.log(attributes)
-        Product.updateProductById(productId, attributes, () => {
+        Product.updateProductById(id, attributes, () => {
             res.status(200).json({message:'201: Success'});
         });
 

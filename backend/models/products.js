@@ -113,9 +113,6 @@ module.exports = class Product {
             if (productIndex === -1) {
                 throw new Error('Product with ID ' + id + ' not found');
             }
-            console.log(attributes)
-            console.log({...products[productIndex]})
-            console.log({...attributes})
             //updating product with new attributes
             products[productIndex] = {
                 ...products[productIndex],
