@@ -1,6 +1,8 @@
 import { Component } from 'react';
 
 import logo from './logo.svg';
+import CardList from './components/card-list/card-list.component';
+import SearchBox from './components/search-box/search-box.component';
 import './App.css';
 
 
@@ -21,17 +23,16 @@ class App extends Component {
       .then(items => this.setState(() =>{
         return { products: items }
       }))
-  }
+  };
   
   onSearchChange = (event) => {
     const searchField = event.target.value.toLocaleLowerCase();
     this.setState(() => {
       return { searchField };
     });
-  }
+  };
   
   render() {
-
     const { products, searchField } = this.state;
     const { onSearchChange } = this;
 
@@ -45,21 +46,12 @@ class App extends Component {
 
     return (
       <div className="App">
-        <input 
-          className='search-box' 
-          type='search' 
-          placeholder='search products' 
-          onChange={onSearchChange}
+        <SearchBox 
+          className='search-box'
+          onSearchChangeHandler={onSearchChange} 
+          placeholder='Search Products' 
         />
-        {
-          filteredProducts.map((product) => {
-            return  (
-            <div key={product.productId}>
-              <h1>{product.productName}</h1>
-            </div>
-            );
-          })  
-        }
+        <CardList products={filteredProducts}/>
       </div>
     );
   }
