@@ -11,6 +11,7 @@ class App extends Component {
 
     this.state = {
       products: [],
+      searchField: '',
     };
   }
 
@@ -21,12 +22,37 @@ class App extends Component {
         return { products: items }
       }))
   }
-
+  
+  onSearchChange = (event) => {
+    const searchField = event.target.value.toLocaleLowerCase();
+    this.setState(() => {
+      return { searchField };
+    });
+  }
+  
   render() {
+
+    const { products, searchField } = this.state;
+    const { onSearchChange } = this;
+
+    const filteredProducts = products.filter((item) => {
+      if (item && item.productName) {
+        return item.productName.toLowerCase().includes(searchField);
+      } else {
+        return false;
+      }
+    })
+
     return (
       <div className="App">
+        <input 
+          className='search-box' 
+          type='search' 
+          placeholder='search products' 
+          onChange={onSearchChange}
+        />
         {
-          this.state.products.map((product) => {
+          filteredProducts.map((product) => {
             return  (
             <div key={product.productId}>
               <h1>{product.productName}</h1>
