@@ -55,7 +55,6 @@ exports.getProductsById = (req, res, next) => {
 exports.updateProduct = (req, res, next) => {
     const id = req.params.id;
     try {
-        // console.log(req.query) 
         const attributes = {
             productName,
             productOwnerName,
