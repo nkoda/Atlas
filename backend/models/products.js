@@ -5,6 +5,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { v4: uuidv4 } = require('uuid');
 
 //Path to products data file
 const productsDataPath = path.join(
@@ -54,9 +55,9 @@ const writeJSONData = (data, callback) => {
 @description Represents a product with several properties
 */
 module.exports = class Product {
-    constructor(id, name, ownerName, developers, scrumMasterName, startDate, methodology) {
+    constructor(name, ownerName, developers, scrumMasterName, startDate, methodology) {
 
-        this.productId = id;
+        this.productId = uuidv4();
         this.productName = name;
         this.productOwnerName = ownerName;
         this.developers = developers;
@@ -109,7 +110,7 @@ module.exports = class Product {
             if (!updateKeys.length) {
                 throw new Error('At least one attribute must be updated');
             }
-            const productIndex = products.findIndex(p => {return p.productId === id});
+            const productIndex = products.findIndex(product => product.productId === id);
             if (productIndex === -1) {
                 throw new Error('Product with ID ' + id + ' not found');
             }
@@ -153,9 +154,7 @@ module.exports = class Product {
     static deleteProductById(id, callback) {
         //Filter out products before rewriting JSON
         getProductsFromFile(products => {
-            const updatedProducts = products.filter(product => {
-                return product.productId !== id;
-            });
+            const updatedProducts = products.filter(product => product.productId !== id);
             writeJSONData(updatedProducts, callback);
         });
     };

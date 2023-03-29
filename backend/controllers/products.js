@@ -59,7 +59,6 @@ exports.updateProduct = (req, res, next) => {
     try {
         // console.log(req.query) 
         const attributes = {
-            productId,
             productName,
             productOwnerName,
             developers,
@@ -77,12 +76,17 @@ exports.updateProduct = (req, res, next) => {
     }
 }
 
+
 /**
  * DELETE request to delete a product with the specified ID from the JSON file
  */
 exports.deleteProduct = (req, res, next) => {
-    const productId = req.params.id;
-    Product.deleteProduct(productId, () => {
-        res.status(204);
+    const productId = parseInt(req.params.id);
+    Product.deleteProductById(productId, (err) => {
+        if (err) {
+            res.status(400).send({message:'Deletion failed'});
+        } else {
+            res.status(204).send({message: 'Successfully deleted'});
+        }
     });
 }
