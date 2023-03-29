@@ -17,7 +17,6 @@ exports.getAllProducts = (req, res, next) => {
  */
 exports.createProduct = async (req, res, next) => {
     const {
-        productId,
         productName,
         productOwnerName,
         developers,
@@ -26,7 +25,6 @@ exports.createProduct = async (req, res, next) => {
         methodology
       } = req.body;
     const product = new Product(
-    productId,
     productName,
     productOwnerName,
     developers,
@@ -55,7 +53,7 @@ exports.getProductsById = (req, res, next) => {
  * PUT request to update a product with the specified ID with the provided attributes
  */
 exports.updateProduct = (req, res, next) => {
-    const id = parseInt(req.params.id);
+    const id = req.params.id;
     try {
         // console.log(req.query) 
         const attributes = {
@@ -81,7 +79,7 @@ exports.updateProduct = (req, res, next) => {
  * DELETE request to delete a product with the specified ID from the JSON file
  */
 exports.deleteProduct = (req, res, next) => {
-    const productId = parseInt(req.params.id);
+    const productId = req.params.id;
     Product.deleteProductById(productId, (err) => {
         if (err) {
             res.status(400).send({message:'Deletion failed'});
