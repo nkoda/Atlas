@@ -2,6 +2,7 @@ import * as React from 'react';
 import { AppBar, Box, Toolbar, Typography, Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { styled } from '@mui/material/styles';
+import { useState } from 'react';
 
 import SearchBox from '../search-box/search-box.component';
 
@@ -14,7 +15,13 @@ const AddProductButton = styled(Button)({
   });
   
 
-const SearchAppBar = ({ onSearchChangeHandler }) => {
+const SearchAppBar = ({ onSearchChangeHandler, onAddProductClick }) => {
+  const [isAddProductButtonClicked, setIsAddProductButtonClicked] = useState(false);
+
+  const handleAddButtonClick = () => {
+    setIsAddProductButtonClicked(!isAddProductButtonClicked);
+    onAddProductClick(isAddProductButtonClicked);
+  }
   return (
     <Box sx={{ flexGrow: 1, paddingBottom: 2}}>
       <AppBar position="static">
@@ -25,7 +32,12 @@ const SearchAppBar = ({ onSearchChangeHandler }) => {
             placeholder='Search Products' 
             >
           </SearchBox>
-          <AddProductButton variant="contained" sx={{backgroundColor:'#fbba1a', color:'black'}} startIcon={<AddIcon />}>
+          <AddProductButton 
+            onClick={handleAddButtonClick} 
+            variant="contained" 
+            sx={{backgroundColor:'#fbba1a', color:'black'}} 
+            startIcon={<AddIcon />}
+          >
             Add Product
           </AddProductButton>
           <Typography
@@ -34,7 +46,7 @@ const SearchAppBar = ({ onSearchChangeHandler }) => {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
-            IMB Project Catalog
+            Project Catalog
           </Typography>
         </Toolbar>
       </AppBar>
