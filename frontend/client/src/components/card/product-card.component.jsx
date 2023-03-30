@@ -1,20 +1,11 @@
-import { Paper, Box } from '@mui/material';
-import { Card, CardActions, CardContent } from '@mui/material';
-import { Divider, Chip, Button } from '@mui/material';
-import {Typography, Grid} from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { 
+  Box, Button, Card, CardActions, CardContent, Paper, Typography 
+} from '@mui/material';
 
 import LabelValueTypography from './label-value-typography.component';
 import MethodologyBadge from './methodology-badge.component';
 
 
-const Root = styled('div')(({ theme }) => ({
-    width: '100%',
-    ...theme.typography.body2,
-    '& > :not(style) + :not(style)': {
-      marginTop: theme.spacing(20),
-    },
-  }));
 
 const ProductCard = ({ product }) => {
     const {
@@ -39,7 +30,7 @@ const ProductCard = ({ product }) => {
       });
 
     return (
-        <Root>
+        <Paper>
             <Card sx={{ minWidth: 275 }}>
             <CardContent>
             <Typography variant="h5" align="left" gutterBottom>
@@ -60,7 +51,7 @@ const ProductCard = ({ product }) => {
             <Button size="small">Learn More</Button>
             </CardActions>
             </Card>
-        </Root>
+        </Paper>
     );
 };
 

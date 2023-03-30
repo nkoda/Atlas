@@ -1,4 +1,4 @@
-import {Chip, Button } from '@mui/material';
+import { Chip } from '@mui/material';
 
 const MethodologyBadge = ({ methodology }) => {
     let color
