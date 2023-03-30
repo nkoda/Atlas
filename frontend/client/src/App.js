@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 
 import CardList from './components/card-list/card-list.component';
 import SearchBox from './components/search-box/search-box.component';
+import SearchAppBar from './components/header-bar/header-bar.component';
 
 import { getProducts } from './api/api';
 import './App.css';
@@ -33,11 +34,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <SearchBox 
-        className='search-box'
-        onSearchChangeHandler={onSearchChange} 
-        placeholder='Search Products' 
-      />
+      <SearchAppBar onSearchChangeHandler={onSearchChange}></SearchAppBar>
       <CardList products={filteredProducts}/>
     </div>
   );
