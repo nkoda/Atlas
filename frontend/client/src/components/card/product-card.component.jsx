@@ -48,7 +48,8 @@ const ProductCard = ({ product }) => {
             <LabelValueTypography label="Start Date" value={startDate} />
             </CardContent>
             <CardActions>
-            <Button size="small">Learn More</Button>
+            <Button size="small">Edit</Button>
+            <Button size="small">Remove</Button>
             </CardActions>
             </Card>
         </Paper>
