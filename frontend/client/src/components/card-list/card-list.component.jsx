@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import ProductCard from '../card/card.component';
+import ProductCard from '../card/product-card.component';
 
 class CardList extends Component {
 
@@ -8,21 +8,12 @@ class CardList extends Component {
         return (
             <div>
                 {products.map((product) => {
-                    const {
-                        productId, 
-                        productName, 
-                        productOwnerName,
-                        developers,
-                        startDate,
-                        methodology
-                    } = product
+                    const { productId } = product
                     return (
                     <div>
                         <ProductCard product={product} key={`${productId}-card`}/>
                     </div>)
-
-                    }
-                )}
+                })}
             </div>
         );
     }

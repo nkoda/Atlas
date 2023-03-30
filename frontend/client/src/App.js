@@ -1,60 +1,44 @@
-import { Component } from 'react';
+import { useState, useEffect } from 'react';
 
-import logo from './logo.svg';
 import CardList from './components/card-list/card-list.component';
 import SearchBox from './components/search-box/search-box.component';
 import './App.css';
 
+const App = () => {
+  const [searchField, setSearchField] = useState('');
+  const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState(products);
 
-
-class App extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      products: [],
-      searchField: '',
-    };
-  }
-
-  componentDidMount() {
+  useEffect(() => {
     fetch('http://localhost:8080/api')
-      .then((response) => response.json())
-      .then(items => this.setState(() =>{
-        return { products: items }
-      }))
-  };
-  
-  onSearchChange = (event) => {
-    const searchField = event.target.value.toLocaleLowerCase();
-    this.setState(() => {
-      return { searchField };
-    });
-  };
-  
-  render() {
-    const { products, searchField } = this.state;
-    const { onSearchChange } = this;
+      .then(response => response.json())
+      .then(items => setProducts(items));
+  }, []);
 
-    const filteredProducts = products.filter((item) => {
+  useEffect(() => {
+    const newFilteredProducts = products.filter((item) => {
       if (item && item.productName) {
         return item.productName.toLowerCase().includes(searchField);
       } else {
         return false;
-      }
-    })
+      }});
+    setFilteredProducts(newFilteredProducts);
+  }, [products, searchField]);
 
-    return (
-      <div className="App">
-        <SearchBox 
-          className='search-box'
-          onSearchChangeHandler={onSearchChange} 
-          placeholder='Search Products' 
-        />
-        <CardList products={filteredProducts}/>
-      </div>
-    );
-  }
+  const onSearchChange = (event) => {
+    const searchFieldString = event.target.value.toLocaleLowerCase();
+    setSearchField(searchFieldString)
+  };
+
+  return (
+    <div className="App">
+      <SearchBox 
+        className='search-box'
+        onSearchChangeHandler={onSearchChange} 
+        placeholder='Search Products' 
+      />
+      <CardList products={filteredProducts}/>
+    </div>
+  );
 }
-
 export default App;
