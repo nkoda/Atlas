@@ -2,26 +2,29 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost:8080/api';
 
-export function getProductsById(productId) {
-    return axios.get(`${API_URL}/${productId}`);
+export async function getProductsById(productId) {
+    const req = await axios.get(`${API_URL}/${productId}`);
+    return req.data;
 }
 
-export function getProducts() {
-    return axios.get(`${API_URL}`);
+export async function getProducts() {
+    const req = await axios.get(`${API_URL}`); 
+    return req.data;
 }
 
-export function createProduct(productId, product) {
-    const res = axios.post(`${API_URL}/${productId}`, product);
+export async function createProduct(productId, product) {
+    const res = await axios.post(`${API_URL}/${productId}`, product);
     res.data.headers('Content-Type', 'application/json');
     return res;
 }
 
-export function updateProduct(productId, attributes) {
-    const res = axios.put(`${API_URL}/${productId}`, attributes);
+export async function updateProduct(productId, attributes) {
+    const res = await axios.put(`${API_URL}/${productId}`, attributes);
     res.data.headers('Content-Type', 'application/json');
     return res;
 }
 
-export function deleteProduct(productId) {
-    return axios.delete(`${API_URL}/${productId}`);
+export async function deleteProduct(productId) {
+    const res = await axios.delete(`${API_URL}/${productId}`);
+    return res.data;
 }

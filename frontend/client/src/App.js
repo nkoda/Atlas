@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 
 import CardList from './components/card-list/card-list.component';
 import SearchBox from './components/search-box/search-box.component';
+
+import { getProducts } from './api/api';
 import './App.css';
 
 const App = () => {
@@ -10,8 +12,7 @@ const App = () => {
   const [filteredProducts, setFilteredProducts] = useState(products);
 
   useEffect(() => {
-    fetch('http://localhost:8080/api')
-      .then(response => response.json())
+    getProducts()
       .then(items => setProducts(items));
   }, []);
 
