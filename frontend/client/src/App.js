@@ -48,7 +48,7 @@ const App = () => {
         onSearchChangeHandler={onSearchChange} 
         onAddProductClick={handleAddProductClick}
       />
-      {isAddProductOverlayVisible && <AddProductOverlay onAddProduct={(e)=> {console.log(e)}} handleCloseOverlay={handleCloseOverlay}/>}
+      {isAddProductOverlayVisible && <AddProductOverlay onAddProduct={(e)=> {console.log(e)}} handleCloseOverlay={handleCloseOverlay} prop={{}}/>}
       <CardList products={filteredProducts}/>
     </div>
   );

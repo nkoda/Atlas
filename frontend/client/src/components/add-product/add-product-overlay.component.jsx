@@ -12,6 +12,8 @@ import {
 import { styled } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close';
 
+import { getCurrentDate } from '../utils/current-date';
+
 const BlackOverlay = styled('div')({
   position: 'fixed',
   top: 0,
@@ -40,23 +42,49 @@ const FormTextField = styled(TextField)({
   marginBottom: 10,
 });
 
-const AddProductOverlay = ({ onAddProduct, handleCloseOverlay }) => {
-  const [isOverlayVisible, setOpen] = useState(true);
-  const [productName, setProductName] = useState('');
-  const [productDescription, setProductDescription] = useState('');
+const handleEmptyFields = (prop, nullCase='') => {
+  return prop !== 'undefined' ? prop : nullCase
+}
 
+const AddProductOverlay = ({ onAddProduct, handleCloseOverlay, product={developers:[]} }) => {
+  const [isOverlayVisible, setOpen] = useState(true);
+  const [productName, setProductName] = useState(handleEmptyFields(product.productName));
+  const [productOwnerName, setProductOwnerName] = useState(handleEmptyFields(product.productOwnerName));
+  const [scrumMasterName, setScrumMasterName] = useState(handleEmptyFields(product.scrumMasterName));
+  const [dev0, setDev0] = useState(handleEmptyFields(product.developers[0], ''));
+  const [dev1, setDev1] = useState(handleEmptyFields(product.developers[1], ''));
+  const [dev2, setDev2] = useState(handleEmptyFields(product.developers[2], ''));
+  const [dev3, setDev3] = useState(handleEmptyFields(product.developers[3], ''));
+  const [dev4, setDev4] = useState(handleEmptyFields(product.developers[4], ''));
+  const [startDate, setStartDate] = useState(handleEmptyFields(product.startDate, getCurrentDate()));
+  const [methodology, setMethodology] = useState(handleEmptyFields(product.methodology));
+  
   const handleClose = () => {
     setOpen(false);
     handleCloseOverlay(isOverlayVisible);
   };
 
   const handleAddProduct = () => {
+    const developers = [dev0, dev1, dev2, dev3, dev4].filter(dev => dev !== undefined);
     onAddProduct({
       productName: productName,
-      productDescription: productDescription,
+      productOwnerName: productOwnerName,
+      scrumMasterName: scrumMasterName,
+      developers: developers,
+      startDate: startDate,
+      methodology: methodology,
     });
     handleClose();
   };
+
+  const methodTypes = [
+    {
+      value: 'Agile',
+    },
+    {
+      value: 'Waterfall',
+    },
+  ];
 
   return (
     <>
@@ -73,17 +101,78 @@ const AddProductOverlay = ({ onAddProduct, handleCloseOverlay }) => {
               <Box sx={{ width: '100%', marginTop: 2 }}>
                 <FormTextField
                   label="Product Name"
-                  variant="outlined"
+                  variant="filled"
                   value={productName}
                   onChange={(e) => setProductName(e.target.value)}
                 />
                 <FormTextField
-                  label="Product Description"
-                  variant="outlined"
-                  value={productDescription}
-                  onChange={(e) => setProductDescription(e.target.value)}
-                  multiline
-                  rows={4}
+                  label="Product Owner's Name"
+                  variant="filled"
+                  value={productOwnerName}
+                  onChange={(e) => setProductOwnerName(e.target.value)}
+                />
+                <FormTextField
+                  label="Scrum Master"
+                  variant="filled"
+                  value={scrumMasterName}
+                  onChange={(e) => setScrumMasterName(e.target.value)}
+                />
+                <FormTextField
+                  label="Developer"
+                  variant="filled"
+                  value={dev0}
+                  onChange={(e) => setDev0(e.target.value)}
+                />
+                <FormTextField
+                  label="Developer"
+                  variant="filled"
+                  value={dev1}
+                  onChange={(e) => setDev1(e.target.value)}
+                />
+                <FormTextField
+                  label="Developer"
+                  variant="filled"
+                  value={dev2}
+                  onChange={(e) => setDev2(e.target.value)}
+                />
+                <FormTextField
+                  label="Developer"
+                  variant="filled"
+                  value={dev3}
+                  onChange={(e) => setDev3(e.target.value)}
+                />
+                <FormTextField
+                  label="Developer"
+                  variant="filled"
+                  value={dev4}
+                  onChange={(e) => setDev4(e.target.value)}
+                />
+                <TextField
+                  select
+                  variant="filled"
+                  label="Methodology"
+                  defaultValue="Agile"
+                  value={methodology}
+                  onChange={(e) => setMethodology(e.target.value)}
+                  SelectProps={{
+                    native: true,
+                  }}
+                  helperText="Please select your methodology"
+                >
+                  {methodTypes.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.value}
+                    </option>
+                  ))}
+                </TextField>
+                <TextField
+                  name="Start Date"
+                  label="Start Date"
+                  InputLabelProps={{ shrink: true, required: true }}
+                  type="date"
+                  defaultValue={startDate}
+                  value={startDate}
+                  onChange={(e) => {setStartDate(e.target.value)}}
                 />
               </Box>
               <Button

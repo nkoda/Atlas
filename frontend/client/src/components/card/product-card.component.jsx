@@ -19,7 +19,8 @@ const ProductCard = ({ product }) => {
     } = product;
 
     const developersList = developers.map((developer) => {
-        return (
+        if (developer) {
+          return (
           <p
             key={`${productId}${developer}`}
             style={{ margin: '4px 0', paddingLeft: '10px' }}
@@ -27,7 +28,13 @@ const ProductCard = ({ product }) => {
             • {developer}
           </p>
         );
+        }
+        return (<div></div>);
       });
+
+    const handleDisplayProp = (prop) => {
+      return prop ? prop : 'None';
+    }
 
     return (
         <Paper>
@@ -42,10 +49,10 @@ const ProductCard = ({ product }) => {
             <Typography variant="body2" sx={{ mb: 1.5 }} align="left" color="text.secondary">
                 <b>Project ID: </b> {productId}
             </Typography>
-            <LabelValueTypography label="Owner" value={productOwnerName} />
-            <LabelValueTypography label="Scrum Master" value={scrumMasterName} />
-            <LabelValueTypography label="Developers" value={developersList} />
-            <LabelValueTypography label="Start Date" value={startDate} />
+            <LabelValueTypography label="Owner" value={handleDisplayProp(productOwnerName)} />
+            <LabelValueTypography label="Scrum Master" value={handleDisplayProp(scrumMasterName)} />
+            <LabelValueTypography label="Developers" value={handleDisplayProp(developersList)} />
+            <LabelValueTypography label="Start Date" value={handleDisplayProp(startDate)} />
             </CardContent>
             <CardActions>
             <Button size="small">Edit</Button>
