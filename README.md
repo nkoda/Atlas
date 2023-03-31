@@ -27,16 +27,19 @@ A terminal is used to run the following setup commands.
 
 Running this project: 
 
+
 1. clone the repository onto your local machine (SSH and HTTP examples are provided below).
 
 ##### SSH Clone:
 ```
 $ git clone git@github.com:nkoda/nikko-dumrique-IS24-full-stack-competition-req97073.git
+```
 
 ##### HTTP Clone:
 ```
 $ git clone https://github.com/nkoda/nikko-dumrique-IS24-full-stack-competition-req97073.git
 ```
+
 
 2. Navigate to the root of the repository directory:
 ```
@@ -48,12 +51,16 @@ $ cd ../nikko-dumrique-IS24-full-stack-competition-req97073.git
 $docker-compose build
 ```
 
+
 4. Start the Docker containers to run the application:
 ```
 docker-compose up
 ```
 
+
 5. Access the application at `http://localhost:3000.`
+
+
 
 ## Troubleshooting
 
