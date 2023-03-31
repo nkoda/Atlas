@@ -1,0 +1,11 @@
+version: '1.0.0'
+
+services:
+  backend:
+    image: imb-project-catalog-backend-image
+    ports:
+      - "8080:8080"
+  frontend:
+    image: imb-project-catalog-frontend-image
+    ports:
+      - "3000:3000"
