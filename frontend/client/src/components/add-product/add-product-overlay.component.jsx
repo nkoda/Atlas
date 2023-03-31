@@ -12,6 +12,8 @@ import {
 import { styled } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close';
 
+import { v4 as uuidv4 } from 'uuid';
+
 import { getCurrentDate } from '../utils/current-date';
 
 const BlackOverlay = styled('div')({
@@ -46,7 +48,11 @@ const handleEmptyFields = (prop, nullCase='') => {
   return prop !== 'undefined' ? prop : nullCase
 }
 
-const AddProductOverlay = ({ onAddProduct, handleCloseOverlay, product={developers:[]} }) => {
+const AddProductOverlay = ({
+  onAddProduct,
+  handleCloseOverlay,
+  product = { developers: [], productId: uuidv4() },
+}) => {
   const [isOverlayVisible, setOpen] = useState(true);
   const [productName, setProductName] = useState(handleEmptyFields(product.productName));
   const [productOwnerName, setProductOwnerName] = useState(handleEmptyFields(product.productOwnerName));
@@ -67,6 +73,7 @@ const AddProductOverlay = ({ onAddProduct, handleCloseOverlay, product={develope
   const handleAddProduct = () => {
     const developers = [dev0, dev1, dev2, dev3, dev4].filter(dev => dev !== undefined);
     onAddProduct({
+      productId: product.productId,
       productName: productName,
       productOwnerName: productOwnerName,
       scrumMasterName: scrumMasterName,
@@ -90,15 +97,15 @@ const AddProductOverlay = ({ onAddProduct, handleCloseOverlay, product={develope
     <>
       <Modal open={isOverlayVisible} onClose={handleClose}>
         <BlackOverlay>
-          <FormCard>
+          <FormCard sx={{ margin: 5, overflow: 'auto'}}>
             <IconButton onClick={handleClose}>
               <CloseIcon/>
             </IconButton>
             <FormCardContent>
               <Typography variant="h5" component="div">
-                Add Product
+                New Project
               </Typography>
-              <Box sx={{ width: '100%', marginTop: 2 }}>
+              <Box sx={{ width: '95%', marginTop: 2 }}>
                 <FormTextField
                   label="Product Name"
                   variant="filled"
@@ -118,31 +125,31 @@ const AddProductOverlay = ({ onAddProduct, handleCloseOverlay, product={develope
                   onChange={(e) => setScrumMasterName(e.target.value)}
                 />
                 <FormTextField
-                  label="Developer"
+                  label="Developer 1"
                   variant="filled"
                   value={dev0}
                   onChange={(e) => setDev0(e.target.value)}
                 />
                 <FormTextField
-                  label="Developer"
+                  label="Developer 2"
                   variant="filled"
                   value={dev1}
                   onChange={(e) => setDev1(e.target.value)}
                 />
                 <FormTextField
-                  label="Developer"
+                  label="Developer 3"
                   variant="filled"
                   value={dev2}
                   onChange={(e) => setDev2(e.target.value)}
                 />
                 <FormTextField
-                  label="Developer"
+                  label="Developer 4"
                   variant="filled"
                   value={dev3}
                   onChange={(e) => setDev3(e.target.value)}
                 />
                 <FormTextField
-                  label="Developer"
+                  label="Developer 5"
                   variant="filled"
                   value={dev4}
                   onChange={(e) => setDev4(e.target.value)}
@@ -157,7 +164,6 @@ const AddProductOverlay = ({ onAddProduct, handleCloseOverlay, product={develope
                   SelectProps={{
                     native: true,
                   }}
-                  helperText="Please select your methodology"
                 >
                   {methodTypes.map((option) => (
                     <option key={option.value} value={option.value}>
@@ -167,6 +173,7 @@ const AddProductOverlay = ({ onAddProduct, handleCloseOverlay, product={develope
                 </TextField>
                 <TextField
                   name="Start Date"
+                  variant="filled"
                   label="Start Date"
                   InputLabelProps={{ shrink: true, required: true }}
                   type="date"
@@ -174,15 +181,15 @@ const AddProductOverlay = ({ onAddProduct, handleCloseOverlay, product={develope
                   value={startDate}
                   onChange={(e) => {setStartDate(e.target.value)}}
                 />
-              </Box>
               <Button
                 variant="contained"
                 color="primary"
-                sx={{ marginTop: 2 }}
+                sx={{ width: '40%', marginLeft: 5, margin: 1 }}
                 onClick={handleAddProduct}
               >
-                Add Product
+                submit Project
               </Button>
+              </Box>
             </FormCardContent>
           </FormCard>
         </BlackOverlay>

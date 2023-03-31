@@ -12,15 +12,15 @@ export async function getProducts() {
     return req.data;
 }
 
-export async function createProduct(productId, product) {
-    const res = await axios.post(`${API_URL}/${productId}`, product);
-    res.data.headers('Content-Type', 'application/json');
+export async function pushNewProduct(product) {
+    const res = await axios.post(`${API_URL}`, product);
+    res.headers['content-type'] = 'application/json';
     return res;
 }
 
 export async function updateProduct(productId, attributes) {
     const res = await axios.put(`${API_URL}/${productId}`, attributes);
-    res.data.headers('Content-Type', 'application/json');
+    res.headers['content-type'] = 'application/json';
     return res;
 }
 
