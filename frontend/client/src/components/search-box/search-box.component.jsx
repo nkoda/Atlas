@@ -11,14 +11,16 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useState, useEffect } from 'react';
 
 
-
+// react component that returns a search box with search filter parameters and a 'results' count
 const SearchBox = ({ 
     className, 
     placeholder, 
     onSearchChangeHandler,
-    onSearchParams }) => {
+    onSearchParams,
+    displayNumResults }) => {
         const [searchParams, setSearchParams] = useState(() => ['scrumMaster', 'developer']);
 
+        // function that handles the toggled search parameters
         const handleSearchParams = (event, newSearchParams) => {
             setSearchParams(newSearchParams);
             onSearchParams(newSearchParams);
@@ -38,6 +40,8 @@ const SearchBox = ({
             onChange={onSearchChangeHandler}
             inputProps={{ 'aria-label': 'Search IMB Project Catalog' }}
             />
+        <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+            Results: {displayNumResults}
         <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
         <ToggleButtonGroup 
             size="small" 

@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import AlertTitle from '@mui/material/AlertTitle';
 import { styled } from '@mui/material/styles';
 
+//defining a black overlay div to backdrop the info-card
 const BlackOverlay = styled('div')({
     position: 'fixed',
     top: 0,

@@ -1,6 +1,12 @@
 import {useState, useEffect} from 'react';
 import { 
-  Box, Button, Card, CardActions, CardContent, Paper, Typography 
+  Box, 
+  Button, 
+  Card, 
+  CardActions, 
+  CardContent, 
+  Paper, 
+  Typography 
 } from '@mui/material';
 
 import LabelValueTypography from './label-value-typography.component';

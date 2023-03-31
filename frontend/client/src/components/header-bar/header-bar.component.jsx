@@ -6,18 +6,19 @@ import { useState } from 'react';
 
 import SearchBox from '../search-box/search-box.component';
 
+//defining custom style for add product button
 const AddProductButton = styled(Button)({
-    color: 'white',
     backgroundColor: '#1976d2',
     '&:hover': {
       backgroundColor: '#e3a82b',
     },
   });
-  
 
-const SearchAppBar = ({ onSearchChangeHandler, onAddProductClick, onSearchParams }) => {
-  const [isAddProductButtonClicked, setIsAddProductButtonClicked] = useState(false);
+  // React component for app header
+const HeaderAppBar = ({ onSearchChangeHandler, onAddProductClick, onSearchParams, numberOfDisplayedCards }) => {
+  const [isAddProductButtonClicked, setIsAddProductButtonClicked] = useState(false); // a state to define product button clicks
 
+  //A function to handle the click add product button event
   const handleAddButtonClick = () => {
     setIsAddProductButtonClicked(!isAddProductButtonClicked);
     onAddProductClick(isAddProductButtonClicked);
@@ -31,6 +32,7 @@ const SearchAppBar = ({ onSearchChangeHandler, onAddProductClick, onSearchParams
             onSearchChangeHandler={onSearchChangeHandler}
             onSearchParams={onSearchParams} 
             placeholder='Search Products' 
+            displayNumResults={numberOfDisplayedCards}
             >
           </SearchBox>
           <AddProductButton 
@@ -55,4 +57,4 @@ const SearchAppBar = ({ onSearchChangeHandler, onAddProductClick, onSearchParams
   );
 };
 
-export default SearchAppBar;
+export default HeaderAppBar;

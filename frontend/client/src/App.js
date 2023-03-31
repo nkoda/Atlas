@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 import CardList from './components/card-list/card-list.component';
-import SearchAppBar from './components/header-bar/header-bar.component';
+import HeaderAppBar from './components/header-bar/header-bar.component';
 import ModifyProductOverlay from './components/modify-product/modify-product-overlay.component';
 
 import { getProducts, pushNewProduct, deleteProduct, pushUpdatedProduct } from './api/api';
@@ -70,9 +70,6 @@ const App = () => {
     }
   }, [hasMounted, createdProduct]);
 
-
-
-  
   // useEffect hook to filter products based on search query
   useEffect(() => {
     if (!Array.isArray(products)) {
@@ -149,10 +146,11 @@ const App = () => {
   // render the SearchAppBar component, AddProductOverlay component, and CardList component
   return (
     <div className="App">
-      <SearchAppBar 
+      <HeaderAppBar 
         onSearchChangeHandler={handleSearchChange} 
         onAddProductClick={handleAddProductClick}
         onSearchParams={handleSearchParams}
+        numberOfDisplayedCards={filteredProducts.length}
       />
       {isAddProductOverlayVisible && 
         <ModifyProductOverlay 

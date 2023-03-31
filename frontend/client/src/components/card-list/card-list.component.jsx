@@ -1,6 +1,7 @@
 import {Grid, Box} from '@mui/material';
 import ProductCard from '../card/product-card.component';
 
+// A react component to dynamically generate product cards
 const CardList = ({ products, onRemoveProduct, onUpdateProduct }) => (
     <Box sx={{ paddingX: 2 }}>
       <Grid container spacing={3}>
