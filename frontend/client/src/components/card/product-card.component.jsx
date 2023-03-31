@@ -1,3 +1,4 @@
+import {useState, useEffect} from 'react';
 import { 
   Box, Button, Card, CardActions, CardContent, Paper, Typography 
 } from '@mui/material';
@@ -5,9 +6,10 @@ import {
 import LabelValueTypography from './label-value-typography.component';
 import MethodologyBadge from './methodology-badge.component';
 
+import InfoCardDelete from './info-card-warning-delete-product.component';
 
-
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, onRemoveProduct }) => {
+  const [isClickedRemoveButton, setClickRemoveButton] = useState(false);
     const {
         productId,
         productName,
@@ -56,7 +58,18 @@ const ProductCard = ({ product }) => {
             </CardContent>
             <CardActions>
             <Button size="small">Edit</Button>
-            <Button size="small">Remove</Button>
+            <Button size="small" onClick={() => {setClickRemoveButton(true)}}>Remove</Button>
+            {isClickedRemoveButton && 
+              <InfoCardDelete 
+                onDeleteProduct={(bool) => { 
+                  if (bool) {
+                    return onRemoveProduct(productId)
+                  } else {
+                    setClickRemoveButton(false);
+                  }
+                  }} 
+              /> 
+            }
             </CardActions>
             </Card>
         </Paper>

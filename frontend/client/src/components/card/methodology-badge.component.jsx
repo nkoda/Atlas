@@ -2,13 +2,15 @@ import { Chip } from '@mui/material';
 
 const MethodologyBadge = ({ methodology }) => {
     let color
-    if (methodology === 'Agile') {
-        color = "success";
+    if (String(methodology).toLowerCase() === 'agile') {
+        color = "#f37322";
+    } else if (String(methodology).toLowerCase() === 'waterfall') {
+        color = "#2eb14c"
     } else {
-        color = "info"
+        color = "#e5ecf6";
     }
     return (
-        <Chip color={color} label={methodology}/>
+        <Chip style={{backgroundColor:color}} label={methodology}/>
     )
 }
 

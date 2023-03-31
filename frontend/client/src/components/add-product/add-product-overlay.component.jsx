@@ -12,10 +12,12 @@ import {
 import { styled } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close';
 
+// Importing UUID to generate unique IDs for products
 import { v4 as uuidv4 } from 'uuid';
 
 import { getCurrentDate } from '../utils/current-date';
 
+// Defining styled components
 const BlackOverlay = styled('div')({
   position: 'fixed',
   top: 0,
@@ -44,34 +46,47 @@ const FormTextField = styled(TextField)({
   marginBottom: 10,
 });
 
-const handleEmptyFields = (prop, nullCase='') => {
-  return prop !== 'undefined' ? prop : nullCase
-}
-
+// This code defines a React component named AddProductOverlay, 
+//which provides a form for users to input details about a new project,
+// and then adds that project to the parent component's state.
 const AddProductOverlay = ({
-  onAddProduct,
-  handleCloseOverlay,
-  product = { developers: [], productId: uuidv4() },
+  onAddProduct, // A function that gets called when a new product is added
+  handleCloseOverlay, // A function that gets called when the overlay is closed
+  product = {  // The initial product values to be displayed in the form fields
+    productId: uuidv4(),
+    productName: '',
+    productOwnerName: '',
+    scrumMasterName: '',
+    developers: [],
+    startDate: getCurrentDate(),
+    methodology: 'agile',
+  },
 }) => {
+  // Setting up the state hooks for different form fields
   const [isOverlayVisible, setOpen] = useState(true);
-  const [productName, setProductName] = useState(handleEmptyFields(product.productName));
-  const [productOwnerName, setProductOwnerName] = useState(handleEmptyFields(product.productOwnerName));
-  const [scrumMasterName, setScrumMasterName] = useState(handleEmptyFields(product.scrumMasterName));
-  const [dev0, setDev0] = useState(handleEmptyFields(product.developers[0], ''));
-  const [dev1, setDev1] = useState(handleEmptyFields(product.developers[1], ''));
-  const [dev2, setDev2] = useState(handleEmptyFields(product.developers[2], ''));
-  const [dev3, setDev3] = useState(handleEmptyFields(product.developers[3], ''));
-  const [dev4, setDev4] = useState(handleEmptyFields(product.developers[4], ''));
-  const [startDate, setStartDate] = useState(handleEmptyFields(product.startDate, getCurrentDate()));
-  const [methodology, setMethodology] = useState(handleEmptyFields(product.methodology));
+  const [productName, setProductName] = useState(product.productName);
+  const [productOwnerName, setProductOwnerName] = useState(product.productOwnerName);
+  const [scrumMasterName, setScrumMasterName] = useState(product.scrumMasterName);
+  const [dev0, setDev0] = useState(product.developers[0]);
+  const [dev1, setDev1] = useState(product.developers[1]);
+  const [dev2, setDev2] = useState(product.developers[2]);
+  const [dev3, setDev3] = useState(product.developers[3]);
+  const [dev4, setDev4] = useState(product.developers[4]);
+  const [startDate, setStartDate] = useState(product.startDate);
+  const [methodology, setMethodology] = useState(product.methodology);
   
+  // Function to close the overlay and call the handleCloseOverlay function
   const handleClose = () => {
     setOpen(false);
     handleCloseOverlay(isOverlayVisible);
   };
 
+  // Function to add a new product by calling the onAddProduct function
   const handleAddProduct = () => {
+    // Creating an array of developers and removing any undefined values
     const developers = [dev0, dev1, dev2, dev3, dev4].filter(dev => dev !== undefined);
+    
+    // Calling the onAddProduct function with the new product object
     onAddProduct({
       productId: product.productId,
       productName: productName,
@@ -84,15 +99,9 @@ const AddProductOverlay = ({
     handleClose();
   };
 
-  const methodTypes = [
-    {
-      value: 'Agile',
-    },
-    {
-      value: 'Waterfall',
-    },
-  ];
-
+  // methodology types for the dropdown menu
+  const methodTypes = [{value:'agile', label:'Agile'}, {value:'waterfall', label:'Waterfall'}];
+  // render the overlay and add-project form card
   return (
     <>
       <Modal open={isOverlayVisible} onClose={handleClose}>
@@ -158,8 +167,7 @@ const AddProductOverlay = ({
                   select
                   variant="filled"
                   label="Methodology"
-                  defaultValue="Agile"
-                  value={methodology}
+                  defaultValue={methodology}
                   onChange={(e) => setMethodology(e.target.value)}
                   SelectProps={{
                     native: true,
@@ -167,7 +175,7 @@ const AddProductOverlay = ({
                 >
                   {methodTypes.map((option) => (
                     <option key={option.value} value={option.value}>
-                      {option.value}
+                      {option.label}
                     </option>
                   ))}
                 </TextField>
@@ -177,7 +185,7 @@ const AddProductOverlay = ({
                   label="Start Date"
                   InputLabelProps={{ shrink: true, required: true }}
                   type="date"
-                  defaultValue={startDate}
+                  defaultValue={getCurrentDate()}
                   value={startDate}
                   onChange={(e) => {setStartDate(e.target.value)}}
                 />
