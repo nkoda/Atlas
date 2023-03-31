@@ -17,9 +17,9 @@ const App = () => {
   const [isUpdateProductOverlayVisible, setUpdateProductOverlayVisible] = useState(false); //controls visibility of add product overlay
   const [createdProduct, setCreateProduct] = useState(null); //new product created using the add product overlay
   const [hasMounted, setHasMounted] = useState(false); //checks if the component has mounted
-  const [removeProduct, setRemoveProduct] = useState(null); //
-  const [updateProduct, setUpdateProduct] = useState(null);
-  const [preUpdateProductData, setPreUpdateProductData] = useState(null);
+  const [removeProduct, setRemoveProduct] = useState(null); //triggers delete request for a specific product ID 
+  const [updateProduct, setUpdateProduct] = useState(null); //triggers update request for a specific product ID
+  const [preUpdateProductData, setPreUpdateProductData] = useState(null); //product data for product wanting to be edited
 
   // useEffect hook to check if the component has mounted
   useEffect(() => {
@@ -75,8 +75,8 @@ const App = () => {
       return;
     }
     const newFilteredProducts = products.filter((item) => {
-      if (item && item.productName) {
-        return item.productName.toLowerCase().includes(searchField);
+      if (item && item.scrumMasterName) {
+        return item.scrumMasterName.toLowerCase().includes(searchField);
       } else {
         return false;
       }});

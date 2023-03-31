@@ -9,8 +9,8 @@ import MethodologyBadge from './methodology-badge.component';
 import InfoCardDelete from './info-card-warning-delete-product.component';
 
 const ProductCard = ({ product, onRemoveProduct, onUpdateProduct }) => {
-  const [isClickedRemoveButton, setClickRemoveButton] = useState(false);
-  const [isClickedEditButton, setClickEditButton] = useState(false);
+  const [isClickedRemoveButton, setClickRemoveButton] = useState(false); //state of the remove button
+  const [isClickedEditButton, setClickEditButton] = useState(false); //state of the edit button
   const [hasMounted, setHasMounted] = useState(false); //checks if the component has mounted
     const {
         productId,
@@ -22,6 +22,25 @@ const ProductCard = ({ product, onRemoveProduct, onUpdateProduct }) => {
         methodology,
     } = product;
 
+    //a function to handle missing data entries in the ui 
+    const handleDisplayProp = (prop) => {
+      return prop ? prop : 'None';
+    }
+    
+    // useEffect hook to check if the component has mounted
+    useEffect(() => {
+      setHasMounted(true);
+    }, []);
+    
+    //useEffect hook to update state when edit button is clicked
+    useEffect(() => {
+      if (hasMounted && isClickedEditButton !== false) {
+        onUpdateProduct(product);
+        setClickEditButton(false);
+      }
+    },[hasMounted, isClickedEditButton]);
+    
+    //a dynamic component that creates <p> elements based on the number of developers
     const developersList = developers.map((developer) => {
         if (developer) {
           return (
@@ -35,23 +54,6 @@ const ProductCard = ({ product, onRemoveProduct, onUpdateProduct }) => {
         }
         return (<div></div>);
       });
-
-    const handleDisplayProp = (prop) => {
-      return prop ? prop : 'None';
-    }
-
-    // useEffect hook to check if the component has mounted
-    useEffect(() => {
-      setHasMounted(true);
-    }, []);
-
-
-    useEffect(() => {
-      if (hasMounted && isClickedEditButton !== false) {
-        onUpdateProduct(product);
-        setClickEditButton(false);
-      }
-    },[hasMounted, isClickedEditButton]);
 
     return (
         <Paper>
