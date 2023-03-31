@@ -17,6 +17,7 @@ Project is created with:
 * React version: 18.2.0
 * Docker version: 20.10.23
 * Docker Compose version: v2.15.1
+* swagger-jsdoc version: 6.2.8
 
 ## Setup Prereqs: 
 To use this application, you must first install Docker on your local machine. Installation documents for Docker can be found [here](https://docs.docker.com/desktop/).
@@ -80,6 +81,11 @@ $ make remove-images
 
 
 ## Troubleshooting
+
+* Swagger documentation is provided by visiting the following url when application is running:
+```
+http://localhost:8080/api-docs/#/
+```
 
 * If you encounter any issues, try rebuilding the Docker images:
 ```
