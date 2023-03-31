@@ -46,11 +46,11 @@ const FormTextField = styled(TextField)({
   marginBottom: 10,
 });
 
-// This code defines a React component named AddProductOverlay, 
-//which provides a form for users to input details about a new project,
-// and then adds that project to the parent component's state.
-const AddProductOverlay = ({
-  onAddProduct, // A function that gets called when a new product is added
+//ModifyProductOverlay provides a form for users to input details about to either
+//create or update a project.
+const ModifyProductOverlay = ({
+  headerTitle,
+  onModifyProduct, // A function that gets called when modifying a product
   handleCloseOverlay, // A function that gets called when the overlay is closed
   product = {  // The initial product values to be displayed in the form fields
     productId: uuidv4(),
@@ -87,7 +87,7 @@ const AddProductOverlay = ({
     const developers = [dev0, dev1, dev2, dev3, dev4].filter(dev => dev !== undefined);
     
     // Calling the onAddProduct function with the new product object
-    onAddProduct({
+    onModifyProduct({
       productId: product.productId,
       productName: productName,
       productOwnerName: productOwnerName,
@@ -112,7 +112,7 @@ const AddProductOverlay = ({
             </IconButton>
             <FormCardContent>
               <Typography variant="h5" component="div">
-                New Project
+                {headerTitle}
               </Typography>
               <Box sx={{ width: '95%', marginTop: 2 }}>
                 <FormTextField
@@ -206,4 +206,4 @@ const AddProductOverlay = ({
   );
 };
 
-export default AddProductOverlay;
+export default ModifyProductOverlay;

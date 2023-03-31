@@ -8,8 +8,10 @@ import MethodologyBadge from './methodology-badge.component';
 
 import InfoCardDelete from './info-card-warning-delete-product.component';
 
-const ProductCard = ({ product, onRemoveProduct }) => {
+const ProductCard = ({ product, onRemoveProduct, onUpdateProduct }) => {
   const [isClickedRemoveButton, setClickRemoveButton] = useState(false);
+  const [isClickedEditButton, setClickEditButton] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false); //checks if the component has mounted
     const {
         productId,
         productName,
@@ -38,6 +40,19 @@ const ProductCard = ({ product, onRemoveProduct }) => {
       return prop ? prop : 'None';
     }
 
+    // useEffect hook to check if the component has mounted
+    useEffect(() => {
+      setHasMounted(true);
+    }, []);
+
+
+    useEffect(() => {
+      if (hasMounted && isClickedEditButton !== false) {
+        onUpdateProduct(product);
+        setClickEditButton(false);
+      }
+    },[hasMounted, isClickedEditButton]);
+
     return (
         <Paper>
             <Card sx={{ minWidth: 275 }}>
@@ -57,7 +72,7 @@ const ProductCard = ({ product, onRemoveProduct }) => {
             <LabelValueTypography label="Start Date" value={handleDisplayProp(startDate)} />
             </CardContent>
             <CardActions>
-            <Button size="small">Edit</Button>
+            <Button size="small" onClick={() => {setClickEditButton(true)}}>Edit</Button>
             <Button size="small" onClick={() => {setClickRemoveButton(true)}}>Remove</Button>
             {isClickedRemoveButton && 
               <InfoCardDelete 

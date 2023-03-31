@@ -18,7 +18,7 @@ export async function pushNewProduct(product) {
     return res;
 }
 
-export async function updateProduct(productId, attributes) {
+export async function pushUpdatedProduct(productId, attributes) {
     const res = await axios.put(`${API_URL}/${productId}`, attributes);
     res.headers['content-type'] = 'application/json';
     return res;
