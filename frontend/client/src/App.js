@@ -116,7 +116,7 @@ const App = () => {
   }
 
   // function to hide the modifying product overlay
-  const handleCloseOverlay = () => {
+  const handleCloseOverlay = (bool) => {
     setAddProductOverlayVisible(false);
     setUpdateProductOverlayVisible(false);
   };
@@ -168,7 +168,7 @@ const App = () => {
         <ModifyProductOverlay 
           headerTitle="Edit Product"
           onModifyProduct={handleUpdate}
-          handleCloseOverlay={handleCloseOverlay} 
+          onCloseOverlay={handleCloseOverlay} 
           product={preUpdateProductData}
         />}
     </div>
