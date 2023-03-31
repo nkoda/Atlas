@@ -6,6 +6,7 @@ const productController = require('../controllers/products');
 
 const router = express.Router();
 
+//GET request to deterime status of the backend
 router.get('/health', healthController.getHealth);
 
 //GET request to get all products
