@@ -8,7 +8,7 @@ import {
     ToggleButton 
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 
 // react component that returns a search box with search filter parameters and a 'results' count
@@ -29,7 +29,6 @@ const SearchBox = ({
     return(
         <Box sx={{ padding: 2 }}>
         <Paper 
-        sx={{ paddingX: 2 }}
         className={className}
         component="search"
         sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 800 }}
