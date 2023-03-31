@@ -2,10 +2,10 @@ version: '3'
 
 services:
   backend:
-    image: imb-project-catalog-backend-image
+    image: backend-image
     ports:
       - "8080:8080"
   frontend:
-    image: imb-project-catalog-frontend-image
+    image: frontend-image
     ports:
       - "3000:3000"
