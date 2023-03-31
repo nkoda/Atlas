@@ -51,7 +51,7 @@ const FormTextField = styled(TextField)({
 const ModifyProductOverlay = ({
   headerTitle,
   onModifyProduct, // A function that gets called when modifying a product
-  handleCloseOverlay, // A function that gets called when the overlay is closed
+  onCloseOverlay, // A function that gets called when the overlay is closed
   product = {  // The initial product values to be displayed in the form fields
     productId: uuidv4(),
     productName: '',
@@ -79,7 +79,7 @@ const ModifyProductOverlay = ({
   // Function to close the overlay and call the handleCloseOverlay function
   const handleClose = () => {
     setOpen(false);
-    handleCloseOverlay(isOverlayVisible);
+    onCloseOverlay(isOverlayVisible);
   };
 
   // Function to add a new product by calling the onAddProduct function

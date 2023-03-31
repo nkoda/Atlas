@@ -20,6 +20,7 @@ const App = () => {
   const [removeProduct, setRemoveProduct] = useState(null); //triggers delete request for a specific product ID 
   const [updateProduct, setUpdateProduct] = useState(null); //triggers update request for a specific product ID
   const [preUpdateProductData, setPreUpdateProductData] = useState(null); //product data for product wanting to be edited
+  const [searchParams, setSearchParams] = useState(['scrumMaster','developer']); // searchbar parameters to specify what to search by 
 
   // useEffect hook to check if the component has mounted
   useEffect(() => {
@@ -69,19 +70,39 @@ const App = () => {
     }
   }, [hasMounted, createdProduct]);
 
+
+
+  
   // useEffect hook to filter products based on search query
   useEffect(() => {
     if (!Array.isArray(products)) {
       return;
     }
     const newFilteredProducts = products.filter((item) => {
-      if (item && item.scrumMasterName) {
-        return item.scrumMasterName.toLowerCase().includes(searchField);
+      // a helper function to useEffect for search queries.
+      // this helper processes the names in each project
+      const extractNames = (element, attribute) => {
+        const item = Array.isArray(element[attribute]) ? element[attribute].toString() : element[attribute];
+        if (element && item) {
+          return item.toLowerCase().includes(searchField);
+        } else {
+          return [];
+        };
+      }
+
+      //filtering items based on search searchParams and the query
+      if (searchParams.includes('scrumMaster') && searchParams.includes('developer')) {
+        return extractNames(item, 'scrumMasterName') + extractNames(item, 'developers');
+      } else if (searchParams.includes('developer')) {
+        return extractNames(item, 'developers');
+      } else if (searchParams.includes('scrumMaster')) {
+        return extractNames(item, 'scrumMasterName');
       } else {
-        return false;
-      }});
+        return extractNames(item, 'productName');
+      }
+    });
     setFilteredProducts(newFilteredProducts);
-  }, [products, searchField]);
+  }, [products, searchField, searchParams]);
 
   // function to show the add product overlay when the add product button is clicked
   const handleAddProductClick = () => {
@@ -101,28 +122,43 @@ const App = () => {
   };
   
   // function to handle change in search field value
-  const onSearchChange = (event) => {
+  const handleSearchChange = (event) => {
     const searchFieldString = event.target.value.toLocaleLowerCase();
     setSearchField(searchFieldString)
   };
+
+  // function to handle what type of search parameters are being used
+  const handleSearchParams = (searchParams) => {
+    setSearchParams(searchParams);
+  }
 
   // function to handle to hook onto id of the product wanting to be deleted
   const handleDelete = (productId) => {
     setRemoveProduct(productId);
   }
 
+  // function to handle to hook onto new product data to post on server
+  const handleCreatePoduct = (product) => {
+    setCreateProduct(product);
+  }
+  // function to handle to hook onto updated product data to post on server
+  const handleUpdate = (product) => {
+    setUpdateProduct(product);
+  }
+
   // render the SearchAppBar component, AddProductOverlay component, and CardList component
   return (
     <div className="App">
       <SearchAppBar 
-        onSearchChangeHandler={onSearchChange} 
+        onSearchChangeHandler={handleSearchChange} 
         onAddProductClick={handleAddProductClick}
+        onSearchParams={handleSearchParams}
       />
       {isAddProductOverlayVisible && 
         <ModifyProductOverlay 
           headerTitle="Add Product"
-          onModifyProduct={setCreateProduct}
-          handleCloseOverlay={handleCloseOverlay} 
+          onModifyProduct={handleCreatePoduct}
+          onCloseOverlay={handleCloseOverlay} 
         />}
       <CardList 
         products={filteredProducts} 
@@ -131,7 +167,7 @@ const App = () => {
       {isUpdateProductOverlayVisible && 
         <ModifyProductOverlay 
           headerTitle="Edit Product"
-          onModifyProduct={setUpdateProduct}
+          onModifyProduct={handleUpdate}
           handleCloseOverlay={handleCloseOverlay} 
           product={preUpdateProductData}
         />}

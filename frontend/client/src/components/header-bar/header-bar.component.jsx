@@ -15,7 +15,7 @@ const AddProductButton = styled(Button)({
   });
   
 
-const SearchAppBar = ({ onSearchChangeHandler, onAddProductClick }) => {
+const SearchAppBar = ({ onSearchChangeHandler, onAddProductClick, onSearchParams }) => {
   const [isAddProductButtonClicked, setIsAddProductButtonClicked] = useState(false);
 
   const handleAddButtonClick = () => {
@@ -28,7 +28,8 @@ const SearchAppBar = ({ onSearchChangeHandler, onAddProductClick }) => {
         <Toolbar>
           <SearchBox
             className='search-box'
-            onSearchChangeHandler={onSearchChangeHandler} 
+            onSearchChangeHandler={onSearchChangeHandler}
+            onSearchParams={onSearchParams} 
             placeholder='Search Products' 
             >
           </SearchBox>

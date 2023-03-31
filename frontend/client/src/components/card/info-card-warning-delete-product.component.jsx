@@ -17,7 +17,7 @@ const BlackOverlay = styled('div')({
     justifyContent: 'center',
     alignItems: 'center',
   });
-
+//A warning component to initiate deletion of a component
 const InfoCardDelete = ({ onDeleteProduct }) => {
   const [open, setOpen] = React.useState(true);
 
@@ -39,24 +39,24 @@ const InfoCardDelete = ({ onDeleteProduct }) => {
             action={
                 <>
                     <Button
-                    aria-label="close"
-                    color="inherit"
-                    size="small"
-                    onClick={() => {
-                        onDeleteProduct(false);
-                        setOpen(false);
+                        aria-label="close"
+                        color="inherit"
+                        size="small"
+                        onClick={() => {
+                            onDeleteProduct(false);
+                            setOpen(false);
                     }}
                     >
                     cancel
                     </Button>
                     <Button
-                    aria-label="close"
-                    color="inherit"
-                    size="small"
-                    onClick={() => {
-                        onDeleteProduct(true);
-                        setOpen(false);
-                    }}
+                        aria-label="close"
+                        color="inherit"
+                        size="small"
+                        onClick={() => {
+                            onDeleteProduct(true);
+                            setOpen(false);
+                        }}
                     >
                     delete product
                     </Button>
