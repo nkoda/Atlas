@@ -1,0 +1,80 @@
+# nikko-dumrique-IS24-full-stack-competition-req97073
+
+## Table of contents
+* [General info](#general-info)
+* [Technologies](#technologies)
+* [Setup Prereqs](#setup-prereqs)
+* [Setup](#setup)
+* [Troubleshooting](#troubleshooting)
+
+## General info
+A full-stack application which catalogs active projects within an organization.
+	
+## Technologies
+Project is created with:
+* Node.js version: 16.13.2
+* Express.js version: 4.18.2
+* React version: 18.2.0
+* Docker version: 20.10.23
+* Docker Compose version: v2.15.1
+
+## Setup Prereqs: 
+To use this application, you must first install Docker on your local machine. Installation documents for Docker can be found [here](https://docs.docker.com/desktop/).
+Additionally Git must be installed on your local machine. Installation documents for Git can be found [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
+A terminal is used to run the following setup commands.
+
+## Setup
+
+Running this project: 
+
+
+1. clone the repository onto your local machine (SSH and HTTP examples are provided below).
+
+##### SSH Clone:
+```
+$ git clone git@github.com:nkoda/nikko-dumrique-IS24-full-stack-competition-req97073.git
+```
+
+##### HTTP Clone:
+```
+$ git clone https://github.com/nkoda/nikko-dumrique-IS24-full-stack-competition-req97073.git
+```
+
+
+2. Navigate to the root of the repository directory:
+```
+$ cd ../nikko-dumrique-IS24-full-stack-competition-req97073.git
+```
+
+3. Build both the server-side and client-side docker images:
+```
+$docker-compose build
+```
+
+
+4. Start the Docker containers to run the application:
+```
+docker-compose up
+```
+
+
+5. Access the application at `http://localhost:3000.`
+
+
+
+## Troubleshooting
+
+* If you encounter any issues, try rebuilding the Docker images:
+```
+docker-compose build --no-cache
+```
+
+* If you want to run the application in the backgroun, use the `-d` flag:
+```
+docker-compose up -d
+```
+
+* To stop the application, press `CTRL + C` on windows, or `CMD + C` on mac in the terminal, or run the following command:
+```
+docker-compose down
+```
