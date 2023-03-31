@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 import CardList from './components/card-list/card-list.component';
 import SearchAppBar from './components/header-bar/header-bar.component';
-import ModifyProductOverlay from './components/add-product/modify-product-overlay.component';
+import ModifyProductOverlay from './components/modify-product/modify-product-overlay.component';
 
 import { getProducts, pushNewProduct, deleteProduct, pushUpdatedProduct } from './api/api';
 

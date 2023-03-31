@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Button,
   IconButton,
@@ -57,7 +57,7 @@ const ModifyProductOverlay = ({
     productName: '',
     productOwnerName: '',
     scrumMasterName: '',
-    developers: [],
+    developers: [''],
     startDate: getCurrentDate(),
     methodology: 'agile',
   },
@@ -74,7 +74,8 @@ const ModifyProductOverlay = ({
   const [dev4, setDev4] = useState(product.developers[4]);
   const [startDate, setStartDate] = useState(product.startDate);
   const [methodology, setMethodology] = useState(product.methodology);
-  
+  const [formEmpty, setFormEmpty] = useState(true);
+
   // Function to close the overlay and call the handleCloseOverlay function
   const handleClose = () => {
     setOpen(false);
@@ -99,6 +100,16 @@ const ModifyProductOverlay = ({
     handleClose();
   };
 
+  // useEffect to validate that the form is filled before submitting
+  useEffect(() => {
+    if (productName && productOwnerName && scrumMasterName && dev0 !== '') {
+      setFormEmpty(false);
+    } else {
+      setFormEmpty(true);
+    }
+
+  },[productName, productOwnerName, scrumMasterName, dev0])
+
   // methodology types for the dropdown menu
   const methodTypes = [{value:'agile', label:'Agile'}, {value:'waterfall', label:'Waterfall'}];
   // render the overlay and add-project form card
@@ -116,55 +127,64 @@ const ModifyProductOverlay = ({
               </Typography>
               <Box sx={{ width: '95%', marginTop: 2 }}>
                 <FormTextField
+                  error={!productName&&formEmpty}
                   label="Product Name"
+                  required={true}
                   variant="filled"
                   value={productName}
                   onChange={(e) => setProductName(e.target.value)}
                 />
                 <FormTextField
+                  error={!productOwnerName&&formEmpty}
                   label="Product Owner's Name"
+                  required={true}
                   variant="filled"
                   value={productOwnerName}
                   onChange={(e) => setProductOwnerName(e.target.value)}
                 />
                 <FormTextField
+                  error={!scrumMasterName&&formEmpty}
                   label="Scrum Master"
+                  required={true}
                   variant="filled"
                   value={scrumMasterName}
                   onChange={(e) => setScrumMasterName(e.target.value)}
                 />
                 <FormTextField
+                  error={!dev0&&formEmpty}
                   label="Developer 1"
+                  required={true}
                   variant="filled"
                   value={dev0}
                   onChange={(e) => setDev0(e.target.value)}
                 />
                 <FormTextField
-                  label="Developer 2"
+                  label="Developer 2 (Optional)"
                   variant="filled"
                   value={dev1}
                   onChange={(e) => setDev1(e.target.value)}
                 />
                 <FormTextField
-                  label="Developer 3"
+                  label="Developer 3 (Optional)"
                   variant="filled"
                   value={dev2}
                   onChange={(e) => setDev2(e.target.value)}
                 />
                 <FormTextField
-                  label="Developer 4"
+                  label="Developer 4 (Optional)"
                   variant="filled"
                   value={dev3}
                   onChange={(e) => setDev3(e.target.value)}
                 />
                 <FormTextField
-                  label="Developer 5"
+                  label="Developer 5 (Optional)"
                   variant="filled"
                   value={dev4}
                   onChange={(e) => setDev4(e.target.value)}
                 />
                 <TextField
                   select
+                  required={true}
                   variant="filled"
                   label="Methodology"
                   defaultValue={methodology}
@@ -180,12 +200,12 @@ const ModifyProductOverlay = ({
                   ))}
                 </TextField>
                 <TextField
+                  required={true}
                   name="Start Date"
                   variant="filled"
                   label="Start Date"
                   InputLabelProps={{ shrink: true, required: true }}
                   type="date"
-                  defaultValue={getCurrentDate()}
                   value={startDate}
                   onChange={(e) => {setStartDate(e.target.value)}}
                 />
@@ -193,7 +213,7 @@ const ModifyProductOverlay = ({
                 variant="contained"
                 color="primary"
                 sx={{ width: '40%', marginLeft: 5, margin: 1 }}
-                onClick={handleAddProduct}
+                onClick={!formEmpty ? handleAddProduct : undefined}
               >
                 submit Project
               </Button>
