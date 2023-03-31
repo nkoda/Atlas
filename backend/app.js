@@ -1,4 +1,6 @@
 const express = require('express');
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./utils/swagger');
 
 const app = express();
 const publicRoutes = require('./routes/public'); 
@@ -12,6 +14,9 @@ app.use((req, res, next) => {
 
 //handle incoming json data
 app.use(express.json()) 
+
+//API Swagger docs
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 //API pubic routes
 app.use('/api', publicRoutes);

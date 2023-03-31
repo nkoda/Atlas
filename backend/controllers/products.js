@@ -7,7 +7,6 @@ const Product = require('../models/products');
  * GET request to get all products
  */
 exports.getAllProducts = (req, res, next) => {
-    console.log('getting products')
     Product.fetchAll(product =>
         res.status(200).json(product));
 }
