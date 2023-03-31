@@ -24,7 +24,7 @@ Additionally Git must be installed on your local machine. Installation documents
 A terminal is used to run the following setup commands.
 Please ensure you have [GNU make](https://www.gnu.org/software/make/) on your computer. 
 Installation of this can vary between devices but can be achieved by running the following in a terminal:
-#####GNU Install
+##### GNU Install
 Linux:
 ```
 sudo apt-get install make
