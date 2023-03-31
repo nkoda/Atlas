@@ -22,6 +22,24 @@ Project is created with:
 To use this application, you must first install Docker on your local machine. Installation documents for Docker can be found [here](https://docs.docker.com/desktop/).
 Additionally Git must be installed on your local machine. Installation documents for Git can be found [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
 A terminal is used to run the following setup commands.
+Please ensure you have [GNU make](https://www.gnu.org/software/make/) on your computer. 
+Installation of this can vary between devices but can be achieved by running the following in a terminal:
+#####GNU Install
+Linux:
+```
+sudo apt-get install make
+```
+
+MacOS:
+```
+brew install make
+```
+
+Windows:
+```
+choco install make
+```
+
 
 ## Setup
 
@@ -46,19 +64,18 @@ $ git clone https://github.com/nkoda/nikko-dumrique-IS24-full-stack-competition-
 $ cd ../nikko-dumrique-IS24-full-stack-competition-req97073.git
 ```
 
-3. Build both the server-side and client-side docker images:
+3. Run the makefile command to build the docker images and run docker-compose
 ```
-$docker-compose build
-```
-
-
-4. Start the Docker containers to run the application:
-```
-docker-compose up
+$ make build-run-all
 ```
 
+4. Access the application at `http://localhost:3000`
 
-5. Access the application at `http://localhost:3000.`
+
+5.(OPTIONAL) When done with the application, remove the images by running the following makefile command:
+```
+$ make remove-images
+```
 
 
 
