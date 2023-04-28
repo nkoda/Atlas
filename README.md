@@ -1,4 +1,4 @@
-# nikko-dumrique-IS24-full-stack-competition-req97073
+# Project Atlas
 
 ## Table of contents
 * [General info](#general-info)
