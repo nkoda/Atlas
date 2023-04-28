@@ -81,6 +81,7 @@ $ make remove-images
 
 
 ## Troubleshooting
+* If Docker fails to pull the associated images, you can manually run the applications by running 'npm start' within both the `backend` and `frontend` directories.
 
 * Swagger documentation is provided by visiting the following url when application is running:
 ```
