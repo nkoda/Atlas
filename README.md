@@ -62,7 +62,7 @@ $ git clone https://github.com/nkoda/Atlas.git
 
 2. Navigate to the root of the repository directory:
 ```
-$ cd ../nikko-dumrique-IS24-full-stack-competition-req97073.git
+$ cd ../Atlas.git
 ```
 
 3. Run the makefile command to build the docker images and run docker-compose
