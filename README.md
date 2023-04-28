@@ -51,12 +51,12 @@ Running this project:
 
 ##### SSH Clone:
 ```
-$ git clone git@github.com:nkoda/nikko-dumrique-IS24-full-stack-competition-req97073.git
+$ git clone git@github.com:nkoda/Atlas.git
 ```
 
 ##### HTTP Clone:
 ```
-$ git clone https://github.com/nkoda/nikko-dumrique-IS24-full-stack-competition-req97073.git
+$ git clone https://github.com/nkoda/Atlas.git
 ```
 
 
