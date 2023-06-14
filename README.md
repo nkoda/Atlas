@@ -20,7 +20,12 @@ Project is created with:
 * swagger-jsdoc version: 6.2.8
 
 ## Setup Prereqs: 
-To use this application, you must first install Docker on your local machine. Installation documents for Docker can be found [here](https://docs.docker.com/desktop/).
+To use this application, you must first install Docker and Docker-compose on your local machine to run on the terminal. This should be done by installing bother Docker and Docker-Compose through Brew:
+```
+brew install docker
+brew install docker-compose
+```
+Other installation versions of Docker can be found [here](https://docs.docker.com/desktop/).
 Additionally Git must be installed on your local machine. Installation documents for Git can be found [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
 A terminal is used to run the following setup commands.
 Please ensure you have [GNU make](https://www.gnu.org/software/make/) on your computer. 
